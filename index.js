@@ -1,3 +1,29 @@
+import time
+
+# Setzen Sie die maximale Anzahl von Anfragen pro Zeitraum und die Dauer des Zeitraums
+MAX_REQUESTS_PER_TIME_PERIOD = 50
+TIME_PERIOD = 60 # in seconds
+
+# Initialisieren Sie den Zähler auf 0
+request_counter = 0
+
+# Initialisieren Sie die Zeit des letzten Reset auf 0
+last_reset_time = 0
+
+def handle_request():
+    global request_counter, last_reset_time
+    # Prüfen Sie, ob der Zeitraum zurückgesetzt werden muss
+    if time.time() - last_reset_time > TIME_PERIOD:
+        request_counter = 0
+        last_reset_time = time.time()
+    # Erhöhen Sie den Zähler
+    request_counter += 1
+    # Prüfen Sie, ob die Anzahl der Anfragen den Schwellenwert überschreitet
+    if request_counter > MAX_REQUESTS_PER_TIME_PERIOD:
+        print("Too many requests, please try again later.")
+        return
+    # Der Rest des Codes, der die Anfrage an das GPT-3-Modell sendet
+
 const https = require('https');
 const express = require('express');
 const { Configuration, OpenAIApi } = require('openai');
